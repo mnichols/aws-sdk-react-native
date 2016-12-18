@@ -1,6 +1,7 @@
 gradle.properties
 gradle-wrapper.properties
 *.jar
+*.aar
 gradlew
 gradlew.bat
 keystores
