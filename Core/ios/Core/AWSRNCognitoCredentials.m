@@ -13,7 +13,8 @@
 // permissions and limitations under the License.
 //
 #import "AWSRNCognitoCredentials.h"
-
+#import "RCTConvert.h"
+#import "RCTLog.h"
 @interface AWSRNCognitoCredentials()
     @property (nonatomic, readonly) NSDateFormatter *dateFormatterISO8601;
 @end
@@ -74,6 +75,7 @@ RCT_EXPORT_METHOD(clear){
 
 RCT_EXPORT_METHOD(getCredentialsAsync:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
 
+    RCTLog(@"AWSRNCognitoCredentials#initWithOptions getCredentialsASync");
     //start a separate thread for this to avoid blocking the component queue, since
     //it will have to comunicate with the javascript in the mean time while trying to get the list of logins
 
@@ -140,13 +142,15 @@ RCT_EXPORT_METHOD(isAuthenticated:(RCTResponseSenderBlock)callback){
 
 RCT_EXPORT_METHOD(initWithOptions:(NSDictionary *)inputOptions)
 {
-
+    RCTLog(@"AWSRNCognitoCredentials#initWithOptions called");
     [[NSNotificationCenter defaultCenter]
      addObserver:self
      selector:@selector(identityDidChange:)
      name:AWSCognitoIdentityIdChangedNotification object:nil];
     NSString *identityPoolId = [inputOptions objectForKey:IDENTITY_POOL_ID];
+    RCTLog(@"AWSRNCognitoCredentials#initWithOptions identityPoolId: %@", identityPoolId);
     NSString *region = [inputOptions objectForKey:REGION];
+    RCTLog(@"AWSRNCognitoCredentials#initWithOptions region: %@", region);
     credentialProvider = [[AWSCognitoCredentialsProvider alloc]initWithRegionType:[helper regionTypeFromString:region]  identityPoolId:identityPoolId identityProviderManager:self];
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:[helper regionTypeFromString:region] credentialsProvider:credentialProvider];
     [configuration addUserAgentProductToken:@"AWSCognitoCredentials"];
@@ -156,12 +160,14 @@ RCT_EXPORT_METHOD(initWithOptions:(NSDictionary *)inputOptions)
 #pragma mark - AWSIdentityProviderManager
 
 - (AWSTask<NSDictionary<NSString *, NSString *> *> *)logins{
+    RCTLog(@"AWSRNCognitoCredentials#logins called");
     return [[AWSTask taskWithResult:nil] continueWithSuccessBlock:^id _Nullable(AWSTask * _Nonnull task) {
         __block NSArray* arr;
 
         dispatch_semaphore_t sendMessageSemaphore = dispatch_semaphore_create(0);
-
+        RCTLog(@"AWSRNCognitoCredentials#logins dispatching LoginsRequestedEvent");
         [self sendMessage:[[NSMutableDictionary alloc]init] toChannel:@"LoginsRequestedEvent" semaphore:sendMessageSemaphore withCallback:^(NSArray* response) {
+            RCTLog(@"AWSRNCognitoCredentials#logins LoginsRequestedEvent responsed");
             arr = response;
         }];
 
@@ -216,6 +222,7 @@ RCT_EXPORT_METHOD(sendCallbackResponse:(NSString *)callbackId response:(NSArray 
 }
 
 -(void)sendMessage:(NSMutableDictionary*)info toChannel:(NSString*)channel{
+    
     [self.bridge.eventDispatcher
      sendAppEventWithName:channel
      body:[info copy]
@@ -224,6 +231,7 @@ RCT_EXPORT_METHOD(sendCallbackResponse:(NSString *)callbackId response:(NSArray 
 
 -(void)sendMessage:(NSMutableDictionary*)info toChannel:(NSString*)channel semaphore:(dispatch_semaphore_t)semaphore withCallback:(RCTResponseSenderBlock)callback  {
     NSString * callbackId = [self registerCallBack:callback semaphore:semaphore];
+    RCTLog(@"AWSRNCognitoCredentials#logins sendMessage as callbackId %@", callbackId);
     [info setValue:callbackId forKey:@"callbackId"];
     [self sendMessage:info toChannel:channel];
 }

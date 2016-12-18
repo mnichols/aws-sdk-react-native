@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2D80B3B1E05F5C80065A7BC /* AWSRNEventEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = B2D80B3A1E05F5C80065A7BC /* AWSRNEventEmitter.m */; };
 		EB6C37741D07599F00EDC672 /* AWSRNHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = EB6C37731D07599F00EDC672 /* AWSRNHelper.m */; };
 		EBFDBABD1CF537160008F9A8 /* AWSRNCognitoCredentials.m in Sources */ = {isa = PBXBuildFile; fileRef = EBFDBABC1CF537160008F9A8 /* AWSRNCognitoCredentials.m */; };
 		FB2837D31D751FF50030E9C3 /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB2837D21D751FF50030E9C3 /* AWSCore.framework */; };
@@ -25,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B2D80B391E05F58B0065A7BC /* AWSRNEventEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSRNEventEmitter.h; sourceTree = "<group>"; };
+		B2D80B3A1E05F5C80065A7BC /* AWSRNEventEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSRNEventEmitter.m; sourceTree = "<group>"; };
 		EB6C37721D07599F00EDC672 /* AWSRNHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSRNHelper.h; sourceTree = "<group>"; };
 		EB6C37731D07599F00EDC672 /* AWSRNHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSRNHelper.m; sourceTree = "<group>"; };
 		EBFDBAAF1CF536B60008F9A8 /* libCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +72,8 @@
 				EB6C37731D07599F00EDC672 /* AWSRNHelper.m */,
 				EBFDBABB1CF537160008F9A8 /* AWSRNCognitoCredentials.h */,
 				EBFDBABC1CF537160008F9A8 /* AWSRNCognitoCredentials.m */,
+				B2D80B391E05F58B0065A7BC /* AWSRNEventEmitter.h */,
+				B2D80B3A1E05F5C80065A7BC /* AWSRNEventEmitter.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EBFDBABD1CF537160008F9A8 /* AWSRNCognitoCredentials.m in Sources */,
+				B2D80B3B1E05F5C80065A7BC /* AWSRNEventEmitter.m in Sources */,
 				EB6C37741D07599F00EDC672 /* AWSRNHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +272,7 @@
 					"../../react-native/React/**",
 					"../../../../../react-native/React/**",
 					"../../../../../../react-native/React/Base/**",
+					"../node_modules/react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -286,6 +293,7 @@
 					"../../react-native/React/**",
 					"../../../../../react-native/React/**",
 					"../../../../../../react-native/React/Base/**",
+					"../node_modules/react-native/React/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = "-ObjC";
